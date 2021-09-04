@@ -34,8 +34,8 @@ return [
         'client_secret'=>env('GOOGLE_APP_KEY'),
         'redirect'=>env('GOOGLE_APP_SECRET')
     ],
-    'github' =>[
-        'client_id'=>env('FACEBOOK _APP_ID'),
+    'facebook' =>[
+        'client_id'=>env('FACEBOOK_APP_ID'),
         'client_secret'=>env('FACEBOOK_APP_KEY'),
         'redirect'=>env('FACEBOOK_APP_SECRET')
     ],

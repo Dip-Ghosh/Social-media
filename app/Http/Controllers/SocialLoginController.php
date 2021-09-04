@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use mysql_xdevapi\Exception;
-
+use App\Repository\LoginRepository;
 class SocialLoginController extends Controller
 {
+    protected $loginRepository ;
     public function redirectToGoogle($service)
     {
         return Socialite::driver($service)->redirect();
@@ -20,26 +19,21 @@ class SocialLoginController extends Controller
      *
      * @return void
      */
-    public function handleGoogleCallback($service)
+    public function handleGoogleCallback($service,LoginRepository $loginRepository)
     {
         try {
 
-            $user = Socialite::driver($service)->stateless()->user();
-
-            $finduser = User::where('social_network_id', $user->id)->first();
+            $user = $loginRepository->ServiceName($service);
+            $finduser = $loginRepository->findUser($user);
 
             if($finduser){
-                Auth::login($finduser);
-                return redirect()->intended('dashboard');
+               $loginRepository->login($finduser);
+               return redirect()->intended('dashboard');
             }
             else{
-                $newUser = User::create([
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'social_network_id'=> $user->id,
-                    'password' => encrypt('123456dummy')
-                ]);
-                Auth::login($newUser);
+                $newUser = $loginRepository->create($user,$service);
+                $loginRepository->login($newUser);
+
                 return redirect()->intended('dashboard');
             }
 
