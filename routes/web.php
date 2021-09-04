@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SocialLoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+Route::get('login/{service}', [SocialLoginController::class, 'redirectToGoogle']);
+Route::get('login/{service}/callback', [SocialLoginController::class, 'handleGoogleCallback']);

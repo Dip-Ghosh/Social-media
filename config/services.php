@@ -29,5 +29,15 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'google' =>[
+        'client_id'=>env('GOOGLE_APP_ID'),
+        'client_secret'=>env('GOOGLE_APP_KEY'),
+        'redirect'=>env('GOOGLE_APP_SECRET')
+    ],
+    'github' =>[
+        'client_id'=>env('FACEBOOK _APP_ID'),
+        'client_secret'=>env('FACEBOOK_APP_KEY'),
+        'redirect'=>env('FACEBOOK_APP_SECRET')
+    ],
 
 ];
