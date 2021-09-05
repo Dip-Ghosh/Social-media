@@ -111,13 +111,12 @@
 <!-- end preheader -->
 
 <!-- start body -->
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<table>
 
-    <!-- start logo -->
     <tr>
-        <td align="center" bgcolor="#e9ecef">
+        <td>
 
-            <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+            <table >
                 <tr>
                     <td align="center" valign="top" width="600">
 
@@ -134,7 +133,7 @@
             </td>
             </tr>
             </table>
-            <![endif]-->
+
         </td>
     </tr>
 

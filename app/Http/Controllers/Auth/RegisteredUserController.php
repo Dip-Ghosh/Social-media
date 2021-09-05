@@ -10,9 +10,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-
+use App\Strategy\SendMessage;
+use App\Strategy\SmsNotification;
 class RegisteredUserController extends Controller
 {
+    private $sendMessage ;
+
+    public function __construct(SendMessage $sendMessage)
+    {
+        $this->sendMessage = $sendMessage;
+
+    }
     /**
      * Display the registration view.
      *
@@ -48,6 +56,8 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        $this->sendMessage->notification(new SmsNotification($user));
+
 
         return redirect(RouteServiceProvider::HOME);
     }

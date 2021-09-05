@@ -5,7 +5,7 @@ namespace App\Repository;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
-use App\Events\PostLoginEmail;
+
 
 class LoginRepository
 {
@@ -24,11 +24,12 @@ class LoginRepository
 
     public function create($user, $service)
     {
+        $test = $service;
         return User::create([
             'name' => $user['name'],
             'email' => $user['email'],
             'social_network_id' => $user['id'],
-            'social_network_name' => $service,
+            'social_network_name' => $test,
             'password' => encrypt('123456dummy')
         ]);
     }
@@ -36,12 +37,9 @@ class LoginRepository
     public function login($credentials)
     {
          Auth::login($credentials);
-        $this->emailSendEvent($credentials);
     }
 
-    public function emailSendEvent($newUser){
-        event(new PostLoginEmail($newUser));
-    }
+
 
 
 }
