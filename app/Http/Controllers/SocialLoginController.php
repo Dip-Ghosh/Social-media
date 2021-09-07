@@ -38,18 +38,17 @@ class SocialLoginController extends Controller
             $finduser = $loginRepository->findUser($user);
 
             if($finduser){
-                 $loginRepository->login($finduser);
+                $loginRepository->login($finduser);
                 $newUser = Auth::user();
                 $this->sendMessage->notification(new EmailNotifcation($newUser));
-                return redirect()->intended('dashboard');
             }
             else{
+
                 $newUser = $loginRepository->create($user,$service);
                 $loginRepository->login($newUser);
                 $this->sendMessage->notification(new EmailNotifcation($newUser));
-                return redirect()->intended('dashboard');
             }
-
+            return redirect()->intended('dashboard');
 
         } catch (Exception $e) {
            throw  new Exception($e->getMessage());

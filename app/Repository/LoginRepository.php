@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Strategy\LoginStrategy\FacebookLogin;
+use App\Strategy\LoginStrategy\GithubLogin;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
@@ -10,16 +12,31 @@ use App\Models\User;
 class LoginRepository
 {
 
+
     public function ServiceName($service)
     {
-        return Socialite::driver($service)
-            ->stateless()
-            ->user();
+        switch ($service){
+            case 'facebook':
+                $object = new FacebookLogin();
+                break;
+            case 'github':
+                $object = new GithubLogin();
+                break;
+            case 'google':
+                $object = new FacebookLogin();
+                break;
+
+        }
+        return  $object->getSoicalMedia($service);
+
     }
 
     public function findUser($user)
     {
-        return User::where('social_network_id', $user->id)->first();
+        if(!empty($user)){
+            return User::where('social_network_id', $user->id)->first();
+        }
+
     }
 
     public function create($user, $service)
