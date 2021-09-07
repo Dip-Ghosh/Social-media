@@ -9,7 +9,7 @@ class SmsNotification implements SendMessage{
         $basic  = new \Nexmo\Client\Credentials\Basic('d05d6cd0', '0qbeKt8D8EKnzYKY');
         $client = new \Nexmo\Client($basic);
 
-        $dat =(!empty($data))? "8801682295309" : "8801682295309";
+        $dat =($data)? "8801682295309" : "8801682295309";
         $response = $client->sms()->send(
             new \Vonage\SMS\Message\SMS($dat, 'DIP GHOSH', 'A text message sent using the Nexmo SMS API')
         );
